@@ -1,23 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
 
+function Header(props) {
+  return <h2>Welcome to the {props.companyName} Incubator</h2>
+}
+
+function Footer(props) {
+  return <p> Ending the paragraph here {props.message}</p>
+}
+
 function App() {
+  let name = 'David'
+  let company = 'LenderClose Inc.'
+  let companymessage = 'Thanks for visiting our site'
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header id="main-header" className="header-class" companyName={company}></Header>
+      <p>My name is {name}</p>
+      <p>I work at {company}</p>
+      <Footer message={companymessage}></Footer>
     </div>
   );
 }
