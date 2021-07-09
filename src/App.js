@@ -1,8 +1,10 @@
 import './App.css';
 import Header from "./Header";
-import {x} from './Header';
 import React, {useState} from "react";
 import NewPersonForm from "./components/NewPersonForm";
+import PersonCard from "./components/PersonCard";
+import {LengthJudge} from "./components/LengthJudge";
+import {Footer} from "./components/Footer";
 
 const startingPeople = [
   {
@@ -21,28 +23,6 @@ const startingPeople = [
     email: 'fdominguez@lenderClose.com'
   }
 ]
-
-function Footer(props) {
-  return <p> Ending the paragraph here {props.message}</p>
-}
-
-function PersonCard(props) {
-  return <div style={{backgroundColor: 'green'}}>
-    <ul>
-      <li>{props.person.name}</li>
-      <li>{props.person.address}</li>
-      <li>{props.person.email}</li>
-    </ul>
-  </div>
-}
-
-function LengthJudge(props) {
-  if (props.people.length > 5) {
-    return <h3>That's a lot of people</h3>
-  } else {
-    return <h3>This is still a small directory</h3>
-  }
-}
 
 function App() {
   let name = 'David'
