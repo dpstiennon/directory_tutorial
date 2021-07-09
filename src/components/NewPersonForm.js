@@ -1,6 +1,7 @@
   import React, {useState} from 'react';
+import {Input, Button, TextField} from "@material-ui/core";
 
-const NewPersonForm = () => {
+const NewPersonForm = (props) => {
   const [name, setName] = useState("David")
   const [address, setAddress] = useState("123 Woodland")
   const [email, setEmail] = useState('dstiennon@lenderclose.com')
@@ -18,19 +19,33 @@ const NewPersonForm = () => {
     setEmail(e.target.value)
   }
   
+  const handleButtonClick = function(e) {
+    props.addPerson({
+      name: name,
+      address: address,
+      email: email
+    })
+    setName('')
+    setAddress('')
+    setEmail('')
+  }
+  
   return (
     <form>
       <div>
         <label>Name</label>
-        <input type="text" value={name} onChange={handleNameChange}/>
+        <TextField variant="outlined" color="primary" label="name" value={name} onChange={handleNameChange}/>
       </div>
       <div>
         <label>Address</label>
-        <input type="text" value={address} onChange={handleAddressChange}/>
+        <TextField variant="outlined" color="primary" value={address} onChange={handleAddressChange}/>
       </div>
       <div>
         <label>Email</label>
-        <input type="text" value={email} onChange={handleEmailChange}/>
+        <TextField variant="outlined" color="primary" value={email} onChange={handleEmailChange}/>
+      </div>
+      <div>
+        <Button variant="contained" color="primary" onClick={handleButtonClick} >Add</Button>
       </div>
     </form>
   );

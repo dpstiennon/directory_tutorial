@@ -1,6 +1,7 @@
 import './App.css';
 import Header from "./Header";
 import {x} from './Header';
+import React, {useState} from "react";
 import NewPersonForm from "./components/NewPersonForm";
 
 const startingPeople = [
@@ -48,17 +49,25 @@ function App() {
   let company = 'LenderClose Inc.'
   let companymessage = 'Thanks for visiting our site'
   
+  const [people, setPeople] = useState(startingPeople)
+  
+  function addPerson(person) {
+    const newPeople = [...people]
+    newPeople.push(person)
+    setPeople(newPeople)
+  }
+  
   return (
     <div>
       <Header id="main-header" className="header-class" companyName={company}></Header>
       {
-        startingPeople.map(person => <PersonCard key={person.email} person={person}/>)
+        people.map(person => <PersonCard key={person.email} person={person}/>)
       }
       
-      <LengthJudge people={startingPeople}/>
+      <LengthJudge people={people}/>
       <p>My name is {name}</p>
       <p>I work at {company}</p>
-      <NewPersonForm />
+      <NewPersonForm addPerson={addPerson}/>
       <Footer message={companymessage}></Footer>
     </div>
   );
