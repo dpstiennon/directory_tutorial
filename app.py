@@ -1,15 +1,14 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
+import json
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/")
 def hello_world():
-    raw_data = [
-        {
-            "name": "David",
-            "address": "3100 N Chestnut",
-            "email": "dstiennon@lenderclose.com"
-        },
-    ]
+    file = open('backend/data.json', 'r')
+    raw_data = json.loads(file.read())
+    file.close()
     return jsonify(raw_data)

@@ -1,28 +1,13 @@
 import './App.css';
 import Header from "./Header";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import NewPersonForm from "./components/NewPersonForm";
 import PersonCard from "./components/PersonCard";
 import {LengthJudge} from "./components/LengthJudge";
 import {Footer} from "./components/Footer";
+import axios from "axios";
 
-const startingPeople = [
-  {
-    name: 'David Stiennon',
-    address: '3100 N Chestnut St',
-    email: 'dstiennon@lenderclose.com'
-  },
-  {
-    name: 'Justin Oglesby',
-    address: 'Somewhere in Des Moines',
-    email: 'joglesby@lenderclose.com'
-  },
-  {
-    name: 'Felix Dominguez',
-    address: '1612 Oak Tree Dr Denton Tx 76209',
-    email: 'fdominguez@lenderClose.com'
-  }
-]
+const startingPeople = []
 
 function App() {
   let name = 'David'
@@ -30,6 +15,13 @@ function App() {
   let companymessage = 'Thanks for visiting our site'
   
   const [people, setPeople] = useState(startingPeople)
+  
+  useEffect(() => {
+    axios.get('http://localhost:5000/').then((result) => {
+       setPeople(result.data)
+    })
+  }, [])
+  
   
   function addPerson(person) {
     const newPeople = [...people]
