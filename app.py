@@ -25,7 +25,11 @@ def generate_id(contacts):
 @app.route("/api/contacts", methods=['GET'])
 def get_contacts():
     raw_data = load_all_contacts()
-    return jsonify(raw_data)
+    not_deleted_contacts = []
+    for contact in raw_data:
+        if not contact["deleted"]:
+            not_deleted_contacts.append(contact)
+    return jsonify(not_deleted_contacts)
 
 
 @app.route("/api/contacts/<int:contact_id>", methods=['GET'])
@@ -34,12 +38,17 @@ def one_contact(contact_id):
     the_contact_we_want = next((contact for contact in raw_data if contact['id'] == contact_id), None)
     return jsonify(the_contact_we_want)
 
+@app.route("/api/contacts/<int:contact_id>", methods=['DELETE'])
+def delete_contact(contact_id):
+    #Excercise for the reader
+    pass
 
 @app.route("/api/contacts", methods=['POST'])
 def create_contacts():
     new_contact = json.loads(request.data)
     all_contacts = load_all_contacts()
     new_contact["id"] = generate_id(all_contacts)
+    new_contact["deleted"] = False
     all_contacts.append(new_contact)
     write_contacts(all_contacts)
     return jsonify(all_contacts)

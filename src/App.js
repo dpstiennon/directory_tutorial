@@ -18,15 +18,16 @@ function App() {
   
   useEffect(() => {
     axios.get('http://localhost:5000/api/contacts').then((result) => {
-       setPeople(result.data)
+      setPeople(result.data)
     })
   }, [])
   
   
   function addPerson(person) {
-    const newPeople = [...people]
-    newPeople.push(person)
-    setPeople(newPeople)
+    axios.post('http://localhost:5000/api/contacts', person)
+      .then((result) => {
+        setPeople(result.data)
+      })
   }
   
   return (
