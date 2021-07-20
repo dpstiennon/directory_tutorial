@@ -17,7 +17,7 @@ function App() {
   const [people, setPeople] = useState(startingPeople)
   
   useEffect(() => {
-    axios.get('http://localhost:5000/').then((result) => {
+    axios.get('http://localhost:5000/api/contacts').then((result) => {
        setPeople(result.data)
     })
   }, [])
