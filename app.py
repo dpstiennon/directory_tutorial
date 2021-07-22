@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
+from backend.people_database import PeopleDatabase
 
 app = Flask(__name__)
 CORS(app)
@@ -24,12 +25,14 @@ def generate_id(contacts):
 
 @app.route("/api/contacts", methods=['GET'])
 def get_contacts():
-    raw_data = load_all_contacts()
-    not_deleted_contacts = []
-    for contact in raw_data:
-        if not contact["deleted"]:
-            not_deleted_contacts.append(contact)
-    return jsonify(not_deleted_contacts)
+    raw_data = PeopleDatabase().load()
+    raw_data = [entry for entry in raw_data if entry['deleted'] == False]
+    # raw_data = load_all_contacts()
+    # not_deleted_contacts = []
+    # for contact in raw_data:
+    #     if not contact["deleted"]:
+    #         not_deleted_contacts.append(contact)
+    return jsonify(raw_data)
 
 
 @app.route("/api/contacts/<int:contact_id>", methods=['GET'])
@@ -46,9 +49,7 @@ def delete_contact(contact_id):
 @app.route("/api/contacts", methods=['POST'])
 def create_contacts():
     new_contact = json.loads(request.data)
-    all_contacts = load_all_contacts()
-    new_contact["id"] = generate_id(all_contacts)
-    new_contact["deleted"] = False
-    all_contacts.append(new_contact)
-    write_contacts(all_contacts)
+    _PeopleDb = PeopleDatabase()
+    _PeopleDb.save(new_contact)
+    all_contacts = _PeopleDb.load()
     return jsonify(all_contacts)
