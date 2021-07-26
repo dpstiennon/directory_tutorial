@@ -6,6 +6,7 @@ import PersonCard from "./components/PersonCard";
 import {LengthJudge} from "./components/LengthJudge";
 import {Footer} from "./components/Footer";
 import axios from "axios";
+import {useParams, useHistory, useLocation} from "react-router";
 
 const startingPeople = []
 
@@ -15,6 +16,12 @@ function App() {
   let companymessage = 'Thanks for visiting our site'
   
   const [people, setPeople] = useState(startingPeople)
+  const history = useHistory()
+  const location = useLocation()
+  const user_id = useParams()
+  console.log(history)
+  console.log(location)
+  console.log(user_id)
   
   useEffect(() => {
     axios.get('http://localhost:5000/api/contacts').then((result) => {

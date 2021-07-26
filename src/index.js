@@ -3,9 +3,33 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import LoginPage from "./LoginPage";
+import CreateAccountPage from "./CreateAccountPage";
+
+const Index = () => {
+  return (
+    <BrowserRouter>
+      <h1>LenderClose Directory</h1>
+      <Switch>
+        <Route path="/directory/:user_id" exact >
+          <App />
+        </Route>
+        <Route path="/create-account">
+          <CreateAccountPage/>
+        </Route>
+        <Route path="/">
+         <LoginPage />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
+};
+
+export default Index;
 
 ReactDOM.render(
-  <App />,
+  <Index />,
   document.getElementById('root')
 );
 
