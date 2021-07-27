@@ -6,22 +6,25 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import LoginPage from "./LoginPage";
 import CreateAccountPage from "./CreateAccountPage";
+import {UserProvider} from "./components/UserContext";
 
 const Index = () => {
   return (
     <BrowserRouter>
-      <h1>LenderClose Directory</h1>
-      <Switch>
-        <Route path="/directory/:user_id" exact >
-          <App />
-        </Route>
-        <Route path="/create-account">
-          <CreateAccountPage/>
-        </Route>
-        <Route path="/">
-         <LoginPage />
-        </Route>
-      </Switch>
+      <UserProvider>
+        <h1>LenderClose Directory</h1>
+        <Switch>
+          <Route path="/directory/:user_id" exact>
+            <App/>
+          </Route>
+          <Route path="/create-account">
+            <CreateAccountPage/>
+          </Route>
+          <Route path="/">
+            <LoginPage/>
+          </Route>
+        </Switch>
+      </UserProvider>
     </BrowserRouter>
   );
 };
@@ -29,7 +32,7 @@ const Index = () => {
 export default Index;
 
 ReactDOM.render(
-  <Index />,
+  <Index/>,
   document.getElementById('root')
 );
 

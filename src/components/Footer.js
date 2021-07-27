@@ -1,10 +1,9 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React, {useContext} from "react";
 
-export function Footer(props) {
+export function Footer({message, logout}) {
   return (<div>
-      <p> Ending the paragraph here {props.message}</p>
-      <Link to="/">Logout</Link>
+      <p> Ending the paragraph here {message}</p>
+      <button onClick={logout}>Logout</button>
     </div>
   )
 }

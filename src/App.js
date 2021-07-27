@@ -1,12 +1,13 @@
 import './App.css';
 import Header from "./Header";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import NewPersonForm from "./components/NewPersonForm";
 import PersonCard from "./components/PersonCard";
 import {LengthJudge} from "./components/LengthJudge";
 import {Footer} from "./components/Footer";
 import axios from "axios";
 import {useParams, useHistory, useLocation} from "react-router";
+import UserContext from "./components/UserContext";
 
 const startingPeople = []
 
@@ -16,12 +17,17 @@ function App() {
   let companymessage = 'Thanks for visiting our site'
   
   const [people, setPeople] = useState(startingPeople)
-  const history = useHistory()
-  const location = useLocation()
-  const user_id = useParams()
-  console.log(history)
-  console.log(location)
-  console.log(user_id)
+  const context = useContext(UserContext);
+  // const paramsObject = useParams()
+  // const user_id = paramsObject.user_id
+  const { user_id } = useParams()
+
+  
+  useEffect(() => {
+    if(!context.user || context.user.id !== parseInt(user_id, 10)) {
+      context.actions.logout()
+    }
+  }, [context.user])
   
   useEffect(() => {
     axios.get('http://localhost:5000/api/contacts').then((result) => {
@@ -48,7 +54,7 @@ function App() {
       <p>My name is {name}</p>
       <p>I work at {company}</p>
       <NewPersonForm addPerson={addPerson}/>
-      <Footer message={companymessage}></Footer>
+      <Footer logout={context.actions.logout} message={companymessage}></Footer>
     </div>
   );
 }

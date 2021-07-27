@@ -1,26 +1,18 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link} from "react-router-dom";
 import {useHistory} from "react-router";
+import UserContext from "./components/UserContext";
 
-const validUsers = {
-  'David': 0,
-  'Sampada' : 1,
-  'Colby': 2,
-  'Keifer': 3,
-  'Luke': 4,
-  'Adis': 5
-}
+
 
 const LoginPage = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   
-  const history = useHistory();
+  const userContext = useContext(UserContext)
   
   const handleLogin = (e) => {
-    if (Object.keys(validUsers).includes(username)) {
-      history.push(`/directory/${validUsers[username]}`)
-    }
+    userContext.actions.login(username)
   }
   
   return (
