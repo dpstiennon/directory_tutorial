@@ -8,9 +8,10 @@ from backend.people_database import PeopleDatabase
 class ContactsView(MethodView):
 
     def get(self, contact_id):
-        raw_data = PeopleDatabase().load()
-        raw_data = [entry for entry in raw_data if entry['deleted'] == False]
-        return jsonify(raw_data)
+        if contact_id is None:
+            raw_data = PeopleDatabase().load()
+            raw_data = [entry for entry in raw_data if entry['deleted'] == False]
+            return jsonify(raw_data)
 
     def post(self):
         new_contact = json.loads(request.data)
