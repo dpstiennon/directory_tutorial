@@ -1,4 +1,7 @@
 import psycopg2
+from sqlalchemy import create_engine
+from sqlalchemy.engine.url import URL
+from flask_sqlalchemy import SQLAlchemy
 
 def get_db_conn():
     return psycopg2.connect(
@@ -8,3 +11,5 @@ def get_db_conn():
         user="",
         password=""
     )
+
+db = SQLAlchemy()
