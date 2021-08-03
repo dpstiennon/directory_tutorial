@@ -9,5 +9,5 @@ class Accounts(db.Model):
     name = db.Column(db.Text)
     email = db.Column(db.Text)
     password = db.Column(db.Text)
-    people = db.relationship('People', lazy='joined')
+    people = db.relationship('People', lazy=False)
 

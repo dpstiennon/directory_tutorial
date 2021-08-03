@@ -2,18 +2,20 @@ from flask.views import MethodView
 from flask import jsonify, request
 from backend.models.accounts import Accounts
 from marshmallow import ValidationError
-
+from backend.models.people import People
 from backend.validations.accounts_schema import AccountsSchema
 from backend.db import db
 
 class AccountsView(MethodView):
     def get(self, account_id):
-        account_id = 1
-        this_account = db.session.query(Accounts).filter(Accounts.id == account_id)\
+        schema = AccountsSchema(only=['name', 'email'])
+        this_account = db.session.query(Accounts)\
+            .filter(Accounts.id == account_id)\
             .first()
-        print(this_account)
-        print(this_account.people)
-        return jsonify({'success': True})
+        account_json = schema.dump(this_account)
+        contacts_json = [person.to_json() for person in this_account.people]
+
+        return jsonify(dict(account=account_json, contacts=contacts_json))
 
     def post(self):
         account_schema = AccountsSchema()

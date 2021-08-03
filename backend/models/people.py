@@ -15,6 +15,7 @@ class People(db.Model):
                         db.ForeignKey('accounts.id'),
                         nullable=True,
                         )
+    account = db.relationship('Accounts', lazy=False)
 
     def to_json(self):
         return dict(
