@@ -14,7 +14,7 @@ const Index = () => {
       <UserProvider>
         <h1>LenderClose Directory</h1>
         <Switch>
-          <Route path="/directory/:user_id" exact>
+          <Route path="/directory" exact>
             <App/>
           </Route>
           <Route path="/create-account">

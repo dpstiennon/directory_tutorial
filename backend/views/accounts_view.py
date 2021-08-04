@@ -5,6 +5,7 @@ from marshmallow import ValidationError
 from backend.models.people import People
 from backend.validations.accounts_schema import AccountsSchema
 from backend.db import db
+import bcrypt
 
 class AccountsView(MethodView):
     def get(self, account_id):
@@ -25,7 +26,9 @@ class AccountsView(MethodView):
                 name=result['name'],
                 email=result['email'],
                 password=result['password']
+
             )
+            new_account.password = bcrypt.hashpw(new_account.password.encode(), bcrypt.gensalt()).decode()
             db.session.add(new_account)
             db.session.commit()
         except ValidationError as e:

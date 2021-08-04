@@ -1,5 +1,6 @@
 {
   "SQLALCHEMY_TRACK_MODIFICATIONS": false,
   "SQLALCHEMY_DATABASE_URI": "postgresql://:@localhost:5432/directory",
-  "SQLALCHEMY_ECHO": true
+  "SQLALCHEMY_ECHO": true,
+  "SECRET_KEY": "bHdmNYt6t22BMtq3fYEe0JbPjTkv1P3WI2yPX45D6PdcI9bF4W+9hyTwVjeIFjz7xppNBo3azDWNZh4BQFKr8w=="
 }

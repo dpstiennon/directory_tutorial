@@ -12,7 +12,7 @@ const LoginPage = () => {
   const userContext = useContext(UserContext)
   
   const handleLogin = (e) => {
-    userContext.actions.login(username)
+    userContext.actions.login(username, password)
   }
   
   return (

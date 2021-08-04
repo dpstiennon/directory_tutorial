@@ -20,24 +20,33 @@ function App() {
   const context = useContext(UserContext);
   // const paramsObject = useParams()
   // const user_id = paramsObject.user_id
-  const { user_id } = useParams()
-
+  const {user_id} = useParams()
+  
   
   useEffect(() => {
-    if(!context.user || context.user.id !== parseInt(user_id, 10)) {
+    if (!localStorage.getItem('session_token')) {
       context.actions.logout()
     }
-  }, [context.user])
+  }, [])
   
   useEffect(() => {
-    axios.get('http://localhost:5000/api/contacts').then((result) => {
+    axios.get('http://localhost:5000/api/contacts', {
+      headers: {
+        Authorization: `JWT ${localStorage.getItem('session_token')}`
+      }
+    }).then((result) => {
       setPeople(result.data)
     })
   }, [])
   
   
   function addPerson(person) {
-    axios.post('http://localhost:5000/api/contacts', person)
+    axios.post('http://localhost:5000/api/contacts', person,
+      {
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('session_token')}`
+        }
+      })
       .then((result) => {
         setPeople(result.data)
       })
